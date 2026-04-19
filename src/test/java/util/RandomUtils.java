@@ -9,7 +9,7 @@ public class RandomUtils {
     private static final Faker faker = new Faker();
     private static final Random random = new Random();
 
-    public static int getRandomQuantity(int max) {
+    public static int number(int max) {
         return random.nextInt(max) + 1;
     }
 

@@ -1,9 +1,8 @@
-package page.categorypage;
+package page.search;
 
 import java.math.BigDecimal;
 
-public record ProductDto(
-        Integer serialNumber,
+public record ProductSearchDto(
         String name,
         BigDecimal price
 ) {

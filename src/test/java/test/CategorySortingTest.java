@@ -1,33 +1,37 @@
 package test;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import page.categorypage.CategoryPage;
-import page.categorypage.ProductDto;
+import page.search.SearchPage;
+import page.search.ProductSearchDto;
+import page.search.SortOption;
 
 import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static page.search.SortOption.PRODUCT_NAME_ASC;
+import static page.search.SortOption.PRODUCT_NAME_DESC;
+import static page.search.SortOption.PRODUCT_PRICE_ASC;
+import static page.search.SortOption.PRODUCT_PRICE_DESC;
 
 public class CategorySortingTest extends BaseTest {
 
-    CategoryPage categoryPage;
+    SearchPage searchPage;
 
     @BeforeEach
     void setUp() {
         driver.get("https://automationteststore.com/index.php?rt=product/category&path=68_70");
-        categoryPage = new CategoryPage(driver);
+        searchPage = new SearchPage(driver);
     }
 
     @ParameterizedTest(name = "Сортировка {0}")
     @EnumSource(SortStrategy.class)
     @DisplayName("Проверка сортировки товаров в категории (продуктов должно быть больше 4)")
     void testProductSorting(SortStrategy strategy) {
-        List<ProductDto> products = categoryPage
+        List<ProductSearchDto> products = searchPage
                 .selectSortOption(strategy.sortOption())
                 .getProducts();
 
@@ -36,16 +40,16 @@ public class CategorySortingTest extends BaseTest {
     }
 
     public enum SortStrategy {
-        NAME_ASC("Name A-Z", "pd.name-ASC", Comparator.comparing(ProductDto::name)),
-        NAME_DESC("Name Z-A", "pd.name-DESC", Comparator.comparing(ProductDto::name, Comparator.reverseOrder())),
-        PRICE_ASC("Price Low-High", "p.price-ASC", Comparator.comparing(ProductDto::price)),
-        PRICE_DESC("Price High-Low", "p.price-DESC", Comparator.comparing(ProductDto::price, Comparator.reverseOrder()));
+        NAME_ASC("Name A-Z", PRODUCT_NAME_ASC, Comparator.comparing(ProductSearchDto::name)),
+        NAME_DESC("Name Z-A", PRODUCT_NAME_DESC, Comparator.comparing(ProductSearchDto::name, Comparator.reverseOrder())),
+        PRICE_ASC("Price Low-High", PRODUCT_PRICE_ASC, Comparator.comparing(ProductSearchDto::price)),
+        PRICE_DESC("Price High-Low", PRODUCT_PRICE_DESC, Comparator.comparing(ProductSearchDto::price, Comparator.reverseOrder()));
 
         private final String reportName;
-        private final String htmlValue;
-        private final Comparator<ProductDto> sortBy;
+        private final SortOption htmlValue;
+        private final Comparator<ProductSearchDto> sortBy;
 
-        SortStrategy(String reportName, String htmlValue, Comparator<ProductDto> sortBy) {
+        SortStrategy(String reportName, SortOption htmlValue, Comparator<ProductSearchDto> sortBy) {
             this.reportName = reportName;
             this.htmlValue = htmlValue;
             this.sortBy = sortBy;
@@ -55,11 +59,11 @@ public class CategorySortingTest extends BaseTest {
             return reportName;
         }
 
-        public String sortOption() {
+        public SortOption sortOption() {
             return htmlValue;
         }
 
-        public Comparator<ProductDto> getSortBy() {
+        public Comparator<ProductSearchDto> getSortBy() {
             return sortBy;
         }
 
