@@ -1,0 +1,5 @@
+app:
+  timeout: 5
+  pages:
+    - name: MainPage
+      url: https://automationteststore.com/

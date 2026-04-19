@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.11.2'
 }
 
 group = 'sarinxo.edu'
@@ -9,11 +10,43 @@ repositories {
     mavenCentral()
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
+
+    implementation 'org.slf4j:slf4j-api:2.0.12'
+    implementation 'ch.qos.logback:logback-classic:1.5.13'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    testImplementation 'org.assertj:assertj-core:3.27.7'
+
+    testImplementation 'io.qameta.allure:allure-junit5:2.25.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.25.0'
+
+    //third party
+    implementation 'io.github.bonigarcia:webdrivermanager:6.1.0'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
 }
 
 test {
     useJUnitPlatform()
+
+    systemProperty "allure.results.directory", "${layout.buildDirectory.get().asFile.absolutePath}/allure"
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+allureReport {
+    version = '2.25.0'
 }
