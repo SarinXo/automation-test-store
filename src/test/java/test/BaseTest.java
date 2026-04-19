@@ -10,18 +10,19 @@ import util.DriverManager;
 import java.time.Duration;
 
 public class BaseTest {
+
     WebDriver driver;
     WebDriverWait wait;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         driver = DriverManager.getDriver();
         Integer timeout = AppConfig.getProperties().getApp().getTimeout();
         wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
     }
 
     @AfterEach
-    public void teardown(){
+    public void teardown() {
         DriverManager.quitDriver();
     }
 

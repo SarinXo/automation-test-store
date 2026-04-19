@@ -16,4 +16,5 @@ public class MoneyUtils {
 
         return new BigDecimal(doubleNumber);
     }
+
 }

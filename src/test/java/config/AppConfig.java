@@ -1,6 +1,5 @@
 package config;
 
-import property.AppProperty;
 import property.YmlConfig;
 import util.YamlReader;
 

@@ -1,7 +1,6 @@
 package util;
 
 import org.yaml.snakeyaml.Yaml;
-import property.AppProperty;
 import property.YmlConfig;
 
 import java.io.InputStream;
