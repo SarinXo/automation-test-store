@@ -12,7 +12,7 @@ public class ProductMapper {
 
     public static ProductSearchDto webElementToProductDto(WebElement element) {
         String name = element.findElement(By.className("prdocutname")).getAttribute("title");//опечатка на странице
-        String priceText = element.findElement(By.className("oneprice")).getText();//TODO повторяющиеся селекторы - нужно вынести
+        String priceText = element.findElement(By.className("oneprice")).getText();//TODO повторяющиеся селекторы - нужно бить логику на фрагменты (карточка товара и тп) для переиспользования
 
         BigDecimal price = parsePrice(priceText);
 
