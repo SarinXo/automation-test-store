@@ -26,7 +26,7 @@ public class ProductPage extends BasePage {
     }
 
     public CartPage addProductToCart() {
-        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).click();
+        click(addToCartButton);
 
         return new CartPage(driver);
     }

@@ -53,7 +53,7 @@ public class SearchPage extends BasePage {
 
         WebElement targetCard = cards.get(index);
         WebElement linkToProduct = targetCard.findElement(productLink);
-        wait.until(ExpectedConditions.elementToBeClickable(linkToProduct)).click();
+        click(linkToProduct);
 
         return new ProductPage(driver);
     }

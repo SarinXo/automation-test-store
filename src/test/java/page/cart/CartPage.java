@@ -40,7 +40,8 @@ public class CartPage extends BasePage {
         WebElement deleteButton = row.findElement(
                 By.xpath(".//td[7]//a[contains(@class, 'btn-default')]")
         );
-        wait.until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
+
+        click(deleteButton);
 
         return this;
     }
@@ -57,15 +58,7 @@ public class CartPage extends BasePage {
         quantityInput.clear();
         quantityInput.sendKeys(String.valueOf(newQuantity));
 
-        clickUpdate();
-
-        return this;
-    }
-
-    public CartPage clickUpdate() {
-        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(updateButton));
-        btn.click();
-        wait.until(ExpectedConditions.stalenessOf(btn));
+        click(updateButton);
 
         return this;
     }

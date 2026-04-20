@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 
+import static config.AppConfig.CART_PAGE_URL;
 import static config.AppConfig.MAIN_PAGE_URL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.within;
@@ -23,7 +24,7 @@ public class SerchAndCartTest extends BaseTest {
 
     @BeforeEach
     void setUp() {
-        driver.get(MAIN_PAGE_URL);
+        driver.get(CART_PAGE_URL);
     }
 
     @Test
@@ -34,9 +35,11 @@ public class SerchAndCartTest extends BaseTest {
 
         List<CartItemDto> cartItems = cart.getCartItems();
 
+        driver.navigate().to(MAIN_PAGE_URL);
         addProductToCartBySearch(search, 1);
         addProductToCartBySearch(search, 2);
 
+        driver.navigate().to(CART_PAGE_URL);
         List<CartItemDto> cartItemsAfterAdd = cart.getCartItems();
 
         multiplyCheapestItemInCart(cart);

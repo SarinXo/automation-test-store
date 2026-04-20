@@ -13,7 +13,6 @@ import java.util.List;
 
 public class MainPage extends BasePage {
 
-    private final By productLink = By.className("prdocutname");
     private final By allProductCardsLocator = By.xpath(
             "//section[@id='featured' or @id='latest' or @id='bestseller' or @id='special']//div[contains(@class, 'col-md-3')]"
     );
@@ -26,17 +25,19 @@ public class MainPage extends BasePage {
     public ProductPage clickProductButton(String productId) {
         By productLinkLocator = By.xpath("//a[contains(@href, 'product_id=" + productId + "')]");
 
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(productLinkLocator));
+        WebElement productLink = wait.until(ExpectedConditions.presenceOfElementLocated(productLinkLocator));
 
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", productLink);
 
-        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        click(productLink);
+
         return new ProductPage(driver);
     }
 
     @Step("Получить все карточки товаров")
     public List<WebElement> getAllProductsFromSpecifiedSections() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(allProductCardsLocator));
+
         return driver.findElements(allProductCardsLocator);
     }
 

@@ -2,6 +2,7 @@ package page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -21,16 +22,12 @@ public abstract class BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
     }
 
-    protected void waitToBe(By locator, String toBe) {
-        wait.until(ExpectedConditions.attributeToBe(locator, "value", toBe));
+    protected void click(WebElement webElement) {
+        wait.until(ExpectedConditions.elementToBeClickable(webElement)).click();
     }
 
     protected void writeText(By locator, String text) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).sendKeys(text);
-    }
-
-    protected String getText(By locator) {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).getText();
     }
 
 }
