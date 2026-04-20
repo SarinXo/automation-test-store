@@ -14,9 +14,9 @@ public class AppConfig {
         YamlReader yamlReader = new YamlReader();
         YmlConfig ymlConfig = yamlReader.readConfig();
 
-        MAIN_PAGE_URL = ymlConfig.getApp().getPageUrls().get("MainPage");
-        CART_PAGE_URL = ymlConfig.getApp().getPageUrls().get("CartPage");
-        CATEGORY_PAGE_URL = ymlConfig.getApp().getPageUrls().get("CategoryPage");
+        MAIN_PAGE_URL = ymlConfig.getApp().getUrl().get("main");
+        CART_PAGE_URL = ymlConfig.getApp().getUrl().get("cart");
+        CATEGORY_PAGE_URL = ymlConfig.getApp().getUrl().get("category");
         WAIT_TIMEOUT = ymlConfig.getApp().getTimeout();
     }
 

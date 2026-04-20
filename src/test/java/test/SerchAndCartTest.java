@@ -30,21 +30,21 @@ public class SerchAndCartTest extends BaseTest {
     @Test
     @DisplayName("Проверка поиска, сортировки и манипуляций с корзиной")
     void testSearchAndCartLogic() {
-        SearchPage search = new SearchPage(driver);
+        SearchPage searchPage = new SearchPage(driver);
         CartPage cart = new CartPage(driver);
 
         List<CartItemDto> cartItems = cart.getCartItems();
 
         driver.navigate().to(MAIN_PAGE_URL);
-        addProductToCartBySearch(search, 1);
-        addProductToCartBySearch(search, 2);
+        addProductToCartBySearch(searchPage, 1);
+        addProductToCartBySearch(searchPage, 2);
 
         driver.navigate().to(CART_PAGE_URL);
         List<CartItemDto> cartItemsAfterAdd = cart.getCartItems();
 
         multiplyCheapestItemInCart(cart);
 
-        BigDecimal expectedTotal = cart.countControlSum();//todo переименовать
+        BigDecimal expectedTotal = cart.countControlSum();
         BigDecimal actualTotal = cart.getSubTotal();
 
         assertThat(cartItems.size())

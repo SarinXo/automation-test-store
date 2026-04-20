@@ -1,6 +1,6 @@
 app:
   timeout: 5
-  pageUrls:
-    MainPage: https://automationteststore.com/
-    CartPage: https://automationteststore.com/index.php?rt=checkout/cart
-    CategoryPage: https://automationteststore.com/index.php?rt=product/category&path=68_70
+  url:
+    main: https://automationteststore.com/
+    cart: https://automationteststore.com/index.php?rt=checkout/cart
+    category: https://automationteststore.com/index.php?rt=product/category&path=68_70

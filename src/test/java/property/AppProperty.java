@@ -4,15 +4,15 @@ import java.util.Map;
 
 public class AppProperty {
 
-    private Map<String, String> pageUrls;
+    private Map<String, String> url;
     private Integer timeout;
 
-    public Map<String, String> getPageUrls() {
-        return pageUrls;
+    public Map<String, String> getUrl() {
+        return url;
     }
 
-    public void setPageUrls(Map<String, String> pageUrls) {
-        this.pageUrls = pageUrls;
+    public void setUrl(Map<String, String> url) {
+        this.url = url;
     }
 
     public Integer getTimeout() {
