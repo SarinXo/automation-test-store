@@ -10,6 +10,7 @@ import page.search.SortStrategy;
 
 import java.util.List;
 
+import static config.AppConfig.CATEGORY_PAGE_URL;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CategorySortingTest extends BaseTest {
@@ -18,7 +19,7 @@ public class CategorySortingTest extends BaseTest {
 
     @BeforeEach
     void setUp() {
-        driver.get("https://automationteststore.com/index.php?rt=product/category&path=68_70");
+        driver.get(CATEGORY_PAGE_URL);
         searchPage = new SearchPage(driver);
     }
 

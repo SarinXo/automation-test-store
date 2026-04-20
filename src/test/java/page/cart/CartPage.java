@@ -30,7 +30,22 @@ public class CartPage extends BasePage {
                 .toList();
     }
 
-    public void updateProductQuantityByIndex(int rowIndex, int newQuantity) {
+    public CartPage deleteItemByIndex(int index) {
+        List<WebElement> rows = driver.findElements(cartRows);
+        if (index >= rows.size()) {
+            throw new IndexOutOfBoundsException("Индекс " + index + " вне границ. Всего товаров: " + rows.size());
+        }
+        WebElement row = rows.get(index);
+
+        WebElement deleteButton = row.findElement(
+                By.xpath(".//td[7]//a[contains(@class, 'btn-default')]")
+        );
+        wait.until(ExpectedConditions.elementToBeClickable(deleteButton)).click();
+
+        return this;
+    }
+
+    public CartPage updateProductQuantityByIndex(int rowIndex, int newQuantity) {
         wait.until(ExpectedConditions.presenceOfElementLocated(cartRows));
         List<WebElement> rows = driver.findElements(cartRows);
 
@@ -43,12 +58,24 @@ public class CartPage extends BasePage {
         quantityInput.sendKeys(String.valueOf(newQuantity));
 
         clickUpdate();
+
+        return this;
     }
 
-    public void clickUpdate() {
+    public CartPage clickUpdate() {
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(updateButton));
         btn.click();
         wait.until(ExpectedConditions.stalenessOf(btn));
+
+        return this;
+    }
+
+    public BigDecimal countControlSum() {
+        List<CartItemDto> updatedItems = getCartItems();
+
+        return updatedItems.stream()
+                .map(CartItemDto::total)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getSubTotal() {

@@ -1,18 +1,18 @@
 package property;
 
-import java.util.List;
+import java.util.Map;
 
 public class AppProperty {
 
-    private List<PageInfoProperty> pages;
+    private Map<String, String> pageUrls;
     private Integer timeout;
 
-    public List<PageInfoProperty> getPages() {
-        return pages;
+    public Map<String, String> getPageUrls() {
+        return pageUrls;
     }
 
-    public void setPages(List<PageInfoProperty> pages) {
-        this.pages = pages;
+    public void setPageUrls(Map<String, String> pageUrls) {
+        this.pageUrls = pageUrls;
     }
 
     public Integer getTimeout() {

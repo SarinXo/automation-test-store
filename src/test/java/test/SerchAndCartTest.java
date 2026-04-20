@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 
+import static config.AppConfig.MAIN_PAGE_URL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.within;
 import static page.search.SortOption.PRODUCT_NAME_ASC;
@@ -19,11 +20,10 @@ import static page.search.SortOption.PRODUCT_NAME_ASC;
 public class SerchAndCartTest extends BaseTest {
 
     private static final String SEARCH_TERM = "shirt";
-    private static final String BASE_URL = "https://automationteststore.com";
 
     @BeforeEach
     void setUp() {
-        driver.get(BASE_URL);
+        driver.get(MAIN_PAGE_URL);
     }
 
     @Test
@@ -32,13 +32,25 @@ public class SerchAndCartTest extends BaseTest {
         SearchPage search = new SearchPage(driver);
         CartPage cart = new CartPage(driver);
 
+        List<CartItemDto> cartItems = cart.getCartItems();
+
         addProductToCartBySearch(search, 1);
         addProductToCartBySearch(search, 2);
 
+        List<CartItemDto> cartItemsAfterAdd = cart.getCartItems();
+
         multiplyCheapestItemInCart(cart);
 
-        BigDecimal expectedTotal = countAmount(cart);
+        BigDecimal expectedTotal = cart.countControlSum();//todo переименовать
         BigDecimal actualTotal = cart.getSubTotal();
+
+        assertThat(cartItems.size())
+                .as("Изначально в корзине ничего нет")
+                .isEqualTo(0);
+
+        assertThat(cartItemsAfterAdd.size())
+                .as("В корзине появилось 2 предмета")
+                .isEqualTo(2);
 
         assertThat(actualTotal)
                 .as("Проверка итоговой суммы в корзине")
@@ -52,7 +64,7 @@ public class SerchAndCartTest extends BaseTest {
                 .setQuantity(RandomUtils.number(5))
                 .addProductToCart();
 
-        driver.navigate().to(BASE_URL);
+        driver.navigate().to(MAIN_PAGE_URL);
     }
 
     private void multiplyCheapestItemInCart(CartPage cart) {
@@ -66,14 +78,6 @@ public class SerchAndCartTest extends BaseTest {
         int newCheapestItemQuantity = cheapestItem.quantity() * 2;
 
         cart.updateProductQuantityByIndex(cheapestItemIndex, newCheapestItemQuantity);
-    }
-
-    private BigDecimal countAmount(CartPage cart) {
-        List<CartItemDto> updatedItems = cart.getCartItems();
-
-        return updatedItems.stream()
-                .map(CartItemDto::total)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }
