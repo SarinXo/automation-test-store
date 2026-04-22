@@ -30,6 +30,16 @@ public class CartPage extends BasePage {
                 .toList();
     }
 
+    public CartPage deleteEvenItems() {
+        List<WebElement> rows = driver.findElements(cartRows);
+
+        for (int i = 1; i <= rows.size() / 2; i++) {
+            deleteItemByIndex(i);
+        }
+
+        return this;
+    }
+
     public CartPage deleteItemByIndex(int index) {
         List<WebElement> rows = driver.findElements(cartRows);
         if (index >= rows.size()) {

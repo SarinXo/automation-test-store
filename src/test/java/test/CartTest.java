@@ -41,8 +41,7 @@ public class CartTest extends BaseTest {
         driver.navigate().to(CART_PAGE_URL);
         //четные элементы
         List<CartItemDto> cartItems = cart.getCartItems();
-        cart.deleteItemByIndex(1);
-        cart.deleteItemByIndex(2);
+        cart.deleteEvenItems();
         List<CartItemDto> cartItemsAfterDelete = cart.getCartItems();
 
         BigDecimal expectedTotal = cart.countControlSum();
