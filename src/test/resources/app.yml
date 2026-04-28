@@ -1,0 +1,6 @@
+app:
+  timeout: 5
+  url:
+    main: https://automationteststore.com/
+    cart: https://automationteststore.com/index.php?rt=checkout/cart
+    category: https://automationteststore.com/index.php?rt=product/category&path=68_70
